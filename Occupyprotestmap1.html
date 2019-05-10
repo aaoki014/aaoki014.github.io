@@ -1,0 +1,331 @@
+
+<<!DOCTYPE html>
+
+<html>
+
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Occupy Protests</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+      body {margin: 0;padding: 0;}
+h3 {
+  margin: 8px;
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1em;
+}
+      h1 {font-size: 1em}
+      h2 {font-size: 1em}
+
+p {
+  font-size: 0.85em;
+  margin: 10px;
+  text-align: left;
+}
+
+/**
+* Create a position for the map
+* on the page */
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/**
+* Set rules for how the map overlays
+* (information box and legend) will be displayed
+* on the page. */
+.map-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 3px;
+}
+
+#features {
+  bottom: 0;
+    Left: 0;
+  height: 160px;
+  margin-left: 15px;
+    margin-bottom: 30px;
+  width: 260px;
+}
+
+.thislegend {
+background-color: #fff;
+border-radius: 3px;
+bottom: 30px;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+padding: 10px;
+position: absolute;
+right: 10px;
+z-index: 1;
+}
+ 
+.thislegend h4 {
+margin: 0 0 5px;
+}
+ 
+.thislegend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+margin-right: 5px;
+width: 10px;
+}
+      
+.thatlegend {
+background-color: #fff;
+border-radius: 3px;
+bottom: 200px;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+padding: 10px;
+position: absolute;
+right: 10px;
+z-index: 1;
+}
+ 
+.thatlegend h4 {
+margin: 0 0 5px;
+}
+ 
+.thatlegend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+margin-right: 5px;
+width: 10px;
+}
+
+.densitylegend {
+background-color: #fff;
+border-radius: 3px;
+bottom: 370px;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+padding: 10px;
+position: absolute;
+right: 10px;
+z-index: 1;
+}
+ 
+.desnitylegend h4 {
+margin: 0 0 5px;
+}
+ 
+.densitylegend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+margin-right: 5px;
+width: 10px;
+}
+      
+#menu {
+background: #fff;
+position: absolute;
+z-index: 1;
+bottom: 30px;
+left: 280px;
+border-radius: 3px;
+width: 120px;
+border: 1px solid rgba(0,0,0,0.4);
+font-family: 'Open Sans', sans-serif;
+}
+ 
+#menu a {
+font-size: 12px;
+color: #404040;
+display: block;
+margin: 0;
+padding: 0;
+padding: 10px;
+text-decoration: none;
+border-bottom: 1px solid rgba(0,0,0,0.25);
+text-align: center;
+}
+ 
+#menu a:last-child {
+border: none;
+}
+ 
+#menu a:hover {
+background-color: #f8f8f8;
+color: #404040;
+}
+ 
+#menu a.active {
+background-color: #3887be;
+color: #ffffff;
+}
+ 
+#menu a.active:hover {
+background: #3074a4;
+}
+
+  </style>
+</head>
+    
+    
+<body>
+    
+
+<nav id="menu"></nav>
+<div id='map'></div>
+<div class='map-overlay' id='features'>
+    <h2>State Information</h2>
+    <div id='pd'>
+        <p>Hover over a state!</p>
+    </div>
+</div>
+  <div id='state-legend' class='thislegend'>
+<h4>Gini Coefficient of <br> Income Inequality</h4>
+<div><span style='background-color: #fee5d9'></span>0.4063-0.425</div>
+<div><span style='background-color: #fcbba1'></span>0.425-0.450</div>
+<div><span style='background-color: #fe9272'></span>0.450-0.475</div>
+<div><span style='background-color: #fb6a4a'></span>0.475-0.500</div>
+<div><span style='background-color: #cb181d'></span>0.500-0.525</div>
+</div> 
+  <div id='state-legend' class='thatlegend'>
+<h4>2008 Foreclosure <br>Rates</h4>
+<div><span style='background-color: #f7fcfd'></span>0.04-1</div>
+<div><span style='background-color: #ccece6'></span>1-1</div>
+<div><span style='background-color: #66c2a4'></span>2-3</div>
+<div><span style='background-color: #238b45'></span>3-4</div>
+<div><span style='background-color: #0f803e'></span>4-5</div>
+    </div> 
+    <div id='state-legend' class='densitylegend'>
+<h4>Population <br> Density</h4>
+<div><span style='background-color: #f7fefd'></span>1.264-50</div>
+<div><span style='background-color: #9ebcda'></span>50-100</div>
+<div><span style='background-color: #8c96c6'></span>100-200</div>
+<div><span style='background-color: #8c6bb1'></span>200-500</div>
+<div><span style='background-color: #88419d'></span>500-1000</div>
+
+</div> 
+    
+<script>
+    
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWFva2kiLCJhIjoiY2pzMHZtaHpoMW5seDN5bXRuemVqcnFsYiJ9.aX81d9_f_LV0R440rX1Ezw';
+ 
+  // Set bounds to US
+var bounds = [
+[-125.332,23.364], // Southwest coordinates
+[-60.311,50.055]  // Northeast coordinates
+];
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/aaoki/cjva1om1vlma01fnmj5s8tkv6',
+center: [-60.437,50.619],
+zoom: 2,
+maxBounds: bounds // Sets bounds as max
+});
+
+
+// Create a popup, but don't add it to the map yet.
+var popup = new mapboxgl.Popup({
+closeButton: false,
+closeOnClick: false
+});
+
+    
+//protest popups
+map.on('mouseenter', 'occupy-movement-protests-sheet (1)', function(e) {
+// Change the cursor style as a UI indicator.
+map.getCanvas().style.cursor = 'pointer';
+var coordinates = e.features[0].geometry.coordinates.slice();
+var description = e.features[0].properties.Location;
+var attendancedescription = e.features[0].properties.Attendance;
+var datedescription = e.features[0].properties.Date;
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+}
+// Populate the popup and set its coordinates
+// based on the feature found.
+popup.setLngLat(coordinates)
+.setHTML('<h1>Occupy Protest</h1>' + "<center>"+
+        "Location: " +description + "<br>" + "Attendance: " + attendancedescription + "<br>"+ "Date: " + datedescription)
+        
+.addTo(map);
+});
+map.on('mouseleave', 'places', function() {
+map.getCanvas().style.cursor = '';
+popup.remove();
+});
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+// information popup feature    
+map.on('mousemove', function(e) {
+  var states = map.queryRenderedFeatures(e.point, {
+    layers: ['Population Density', '2008 Foreclosure Rates','Gini Coefficient of Income Inequality']
+  });
+
+  if (states.length > 0) {
+    document.getElementById('pd').innerHTML = '<h3><strong>' + states[0].properties.name + '</strong></h3><p><strong><em>' + states[0].properties.density + '</strong> people per square mile</em></p>' + '<p><strong><em>' + states[0].properties.ForeclosureRate + '</strong> 2008 Rate of Foreclosure</em></p>' + '<p><strong><em>' + states[0].properties.GiniCoefficientofIncomeInequality + '</strong> Gini Coefficient of Income Inequality'
+  } else {
+    document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>' + '<p><a href="https://docs.google.com/spreadsheets/d/1HTO2ECO8kXWE7DodeOaYBpGmg6zCpxA_LX7nprrx5dU/edit?usp=sharing">Sources</a></p>';
+  }
+});
+// Hide/show Layers  
+var toggleableLayerIds = ['Population Density', '2008 Foreclosure Rates','Gini Coefficient of Income Inequality'];
+ 
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+var id = toggleableLayerIds[i];
+ 
+var link = document.createElement('a');
+link.href = '#';
+link.className = 'active';
+link.textContent = id;
+ 
+link.onclick = function (e) {
+var clickedLayer = this.textContent;
+e.preventDefault();
+e.stopPropagation();
+ 
+var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+ 
+if (visibility === 'visible') {
+map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+this.className = '';
+} else {
+this.className = 'active';
+map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+}
+};
+ 
+var layers = document.getElementById('menu');
+layers.appendChild(link);
+}
+    
+map.getCanvas().style.cursor = 'default'; 
+  
+</script>
+
+
+</body>
+
+</html>
+
+    
